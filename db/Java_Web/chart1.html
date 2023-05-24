@@ -1,0 +1,165 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, ininial-scale=1.o" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+
+    <title>그래프 그리기</title>
+
+    <script>
+var myChart1 = null;
+var myChart2 = null;
+
+function seeDisplay() {
+  var a = document.getElementById("core");
+  var b = document.getElementById("task");
+
+  if (a.style.display !== "block") {
+    if (!myChart1) {
+      myChart1 = new Chart(document.getElementById('core'), config1);
+    }
+    if (b.style.display === "block") {
+      b.style.display = "none";
+    }
+    a.style.display = "block";
+  } else {
+    a.style.display = "none";
+  }
+}
+
+function seeDisplay1() {
+  var a = document.getElementById("core");
+  var b = document.getElementById("task");
+
+  if (b.style.display !== "block") {
+    if (!myChart2) {
+      myChart2 = new Chart(document.getElementById('task'), config2);
+    }
+    if (a.style.display === "block") {
+      a.style.display = "none";
+    }
+    b.style.display = "block";
+  } else {
+    b.style.display = "none";
+  }
+}
+
+</script>
+
+  </head>
+
+  <body>
+    <canvas id="core" style="height: 13px; width: 40px"></canvas>
+    <script>
+      const data1 = {
+        labels: ["taxt1", "taxt2", "taxt3", "taxt4", "taxt5"],
+
+        datasets: [
+          {
+            label: "최대값",
+            data: [12, 19, 9, 7, 2],
+            backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+            borderColor: ["rgba(255, 99, 132, 1)"],
+            borderWidth: 1,
+          },
+
+          {
+            label: "최소값",
+            data: [18, 2, 12, 4, 9],
+            backgroundColor: ["rgba(255, 159, 64, 0.2)"],
+            borderColor: ["rgba(255, 159, 64, 1)"],
+            borderWidth: 1,
+          },
+
+          {
+            label: "평균값",
+            data: [15, 4, 3, 17, 5],
+            backgroundColor: ["rgba(255, 230, 102, 0.2)"],
+            borderColor: ["rgba(255, 230, 102, 1)"],
+            borderWidth: 1,
+          },
+        ],
+      };
+      const config1 = {
+        type: "line",
+        data: data1,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+    </script>
+
+    <canvas id="task" style="height: 13px; width: 40px"></canvas>
+    <script>
+      // 그래프를 그릴 데이터
+      const data2 = {
+        labels: ["core1", "core2", "core3", "core4", "core5"],
+
+        //그래프 개수를 datasets로 늘릴 수 있다.
+        datasets: [
+          {
+            label: "최대값",
+            data: [5, 8, 12, 17, 4],
+            backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)"],
+        borderWidth: 1,
+      },
+
+      {
+        label: "최소값",
+        data: [9, 9, 14, 2, 3],
+        backgroundColor: ["rgba(255, 159, 64, 0.2)"],
+        borderColor: ["rgba(255, 159, 64, 1)"],
+        borderWidth: 1,
+      },
+
+      {
+        label: "평균값",
+        data: [12, 3, 3, 2, 13],
+        backgroundColor: ["rgba(255, 230, 102, 0.2)"],
+        borderColor: ["rgba(255, 230, 102, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // 그래프 설정, type만 건드리면 된다.
+  const config2 = {
+    type: "line",
+    data: data2,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+
+  
+</script>
+
+
+    <div class="button">
+    <button id="core1" class="core" onclick="seeDisplay()">core1</button>
+    <button id="core2" class="core" onclick="seeDisplay()">core2</button>
+    <button id="core3" class="core" onclick="seeDisplay()">core3</button>
+    <button id="core4" class="core" onclick="seeDisplay()">core4</button>
+    <button id="core5" class="core" onclick="seeDisplay()">core5</button>
+    <button id="taks1" class="task" onclick="seeDisplay1()">task1</button>
+    <button id="taks2" class="task" onclick="seeDisplay1()">task2</button>
+    <button id="taks3" class="task" onclick="seeDisplay1()">task3</button>
+    <button id="taks4" class="task" onclick="seeDisplay1()">task4</button>
+    <button id="taks5" class="task" onclick="seeDisplay1()">task5</button>
+  </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <meta charset=" UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>자바웹 팀플</title>
+
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css" />
+
+</head>
+
+<style>
+    .color-primary {
+        color: red;
+    }
+
+    .font-50 {
+        font-size: 50px;
+    }
+</style>
+
+
+<body>
+    <form action="/" class="dropzone" type="file" name="profile"></form>
+    <input type="submit" value="제출" form="dropzone-form">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
+    <div id="txt">
+    </div>
+    <script type="text/javascript">
+        var up_txt = 0;
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone", {
+            url: "/",
+            paramName: "profile",
+            autoProcessQueue: false,
+            init: function () {
+                    this.on("success", function (file, response) {
+                        console.log(response);
+                        location.href = "/first";
+                        // window.location.href = "http://localhost:8000/graph"; // 파일 업로드 완료 후 페이지 이동
+                        // this.removeAllFiles(); // dropzone 초기화
+                        // myDropzone = null; // dropzone 객체 해제
+                    });
+            }
+        });
+    
+        document.querySelector('input[type="submit"]').addEventListener("click", function (e) {
+            e.preventDefault();
+            myDropzone.processQueue();
+            
+            
+            //console.log(typeof RUN_py);
+            //console.log(RUN_py);
+            //console.log(RUN_py.length);
+        
+        });
+        module.exports = myDropzone;
+    </script>
+</body>
+
+</html>
