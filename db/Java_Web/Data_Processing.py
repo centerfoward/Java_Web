@@ -31,12 +31,14 @@ def Data_Processor(number_count):
     #test_data = input_data.readline()
 
     read_data = (input_data.readlines())
+   
 
     arr_data = []
+    filter_data = []
     
-
     for i in range(len(read_data)):
-        if read_data[i][1] != 't':
+        if read_data[i] != '\n' and read_data[i][1] != 't':
+            #print(i)
             arr_data.extend([read_data[i].split()])
 
     arr_data = list(filter(None, arr_data))
@@ -57,20 +59,16 @@ def Data_Processor(number_count):
                     list_data[arr_plus][i] = int(arr_data[(j)+(i*5)][k+1])
                     arr_plus += 1
     else:
-        if os.path.isfile(File):
-            os.remove(File)
         print(False)
         return False
         
     for i in range(len(list_data)):
         post = {
-            "number" : i,"min": min(list_data[i]), "max": max(list_data[i]), "avg":sum(list_data[i])/10
+            "number" : i, "value" : {"min": min(list_data[i]), "max": max(list_data[i]), "avg":sum(list_data[i])/10}
         }
         db.input.insert_one(post)
 
     input_data.close()
-    if os.path.isfile(File):
-        os.remove(File)
     print(True)
     return True
     

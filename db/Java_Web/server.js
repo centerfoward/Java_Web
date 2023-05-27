@@ -3,6 +3,13 @@ const express = require('express');
 const multer = require('multer');
 const app = express();  //; 없어도됨
 //const myDropzone = require("script");
+app.use(express.static(__dirname));
+//const appModule = require('./app');
+// app.use('/app.js', express.static(__dirname + '/app.js'));
+const {exec} = require('child_process');
+
+
+
 
 const path = require('path'); //없어도 실행됨(책에서 있음)
 
@@ -11,7 +18,7 @@ var storage = multer.diskStorage({
       cb(null, "./"); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
     },
     filename: function (req, file, cb) {
-      cb(null, '.txt') // cb 콜백함수를 통해 전송된 파일 이름 설정
+      cb(null, 'inputFile.txt') // cb 콜백함수를 통해 전송된 파일 이름 설정
       console.log(file.originalname)
     }
 })
@@ -28,19 +35,42 @@ app.get('/home',function(req,res){
 });
 
 
-app.get('/first',function(req,res){
+
+
+app.get('/first',async function(req,res){
     var no_RUN_py = 0;
+
     const spawn = require('child_process').spawn,
     //윈도우 사용시
-    //result_no = spawn('python', ['Data_Processing.py'],);
+    //result = spawn('python', ['Data_Processing.py'],);
     //맥에서 사용시
     result = spawn('python3', ['Data_Processing.py'],);
+    
 
     result.stdout.on('data', function(data){
     no_RUN_py = data.toString();
     no_RUN_py = no_RUN_py.trim();
+
+    
+      
+
+
     if(no_RUN_py === 'True'){
-            res.sendFile(__dirname + '/chart1.html');
+        exec("node app.js", (error, stdout, stderr) => {
+            stdout = stdout.trim();
+            if (error) {
+              console.error(`실행 중 오류 발생: ${error}`);
+              return;
+            }
+            if(stdout === "True"){
+                console.log("값 저장완료");
+                res.sendFile(__dirname + '/chart1.html');
+            }
+            console.log(`stdout: ${stdout}`);
+            // console.error(`stderr: ${stderr}`);
+          });
+
+        
     }
     if(no_RUN_py !== 'True'){
         console.log('텍스트 파일 오류');
@@ -53,6 +83,10 @@ app.get('/first',function(req,res){
         res.sendFile(__dirname + '/error.html');
     });
 });
+
+// app.get('/app.js', function (req, res) {
+//     res.sendFile(path.join(__dirname, '/app.js'));
+// });
 
 
 app.get('/', function (req, res) {
@@ -109,4 +143,4 @@ app.post('/', upload.array('profile', maxFileCount), function(req, res){
 });
 
 
-app.use('/db', express.static('db'));
+app.use('/', express.static('db'));
