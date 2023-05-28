@@ -1,3 +1,24 @@
-.color-primary {color:red;} 
+.div {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+}
+.core {
+    border-radius: 5px;
+    width: 150px;
+    height: 70px;
+    margin: 45px;
+    font-size: 35px;
+    
+}
 
-.font-50{font-size:50px;}
+.task {
+    border-radius: 5px;
+    width: 150px;
+    height: 70px;
+    margin: 45px;
+    font-size: 35px;
+   
+}
+

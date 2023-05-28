@@ -1,962 +1,228 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, ininial-scale=1.o" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <title>그래프 그리기</title>
-    <div id="dataContainer"></div>
-    <script src="data.json"></script>
-    <script>
-      var jsonData = null;
-      var printCoreChart1 = null;
-      var printCoreChart2 = null;
-      var printCoreChart3 = null;
-      var printCoreChart4 = null;
-      var printCoreChart5 = null;
-      var printTaskChart1 = null;
-      var printTaskChart2 = null;
-      var printTaskChart3 = null;
-      var printTaskChart4 = null;
-      var printTaskChart5 = null;
-      
-      function coreChart1() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const coreData1 = {
-          labels: ["task1", "task2", "task3", "task4", "task5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[0], maxValues[1], maxValues[2], maxValues[3], maxValues[4]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[0], minValues[1], minValues[2], minValues[3], minValues[4]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[0], avgValues[1], avgValues[2], avgValues[3], avgValues[4]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const coreConfig1 = {
-          type: "line",
-          data: coreData1,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-    
-        if (!printCoreChart1) {
-          printCoreChart1 = new Chart(document.getElementById('core1'), coreConfig1);
-        }
-      }
+ <head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, ininial-scale=1.o" />
+ <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <link href="style.css" rel="stylesheet" type="text/css" />
+ <title>그래프 그리기</title>
+ <script src="data.json"></script>
+ <script>
+ var jsonData = null;
+ var printCoreCharts = [null, null, null, null, null];
+ var printTaskCharts = [null, null, null, null, null];
+ 
+ function coreChart(chartNum) {
+ const minValues = jsonData.minValues;
+ const maxValues = jsonData.maxValues;
+ const avgValues = jsonData.avgValues;
+ 
+ const coreData = {
+ labels: ["task1", "task2", "task3", "task4", "task5"],
+ datasets: [
+ {
+ label: "최대값",
+ data: [maxValues[chartNum*5], maxValues[chartNum*5+1], maxValues[chartNum*5+2], maxValues[chartNum*5+3], maxValues[chartNum*5+4]],
+ backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+ borderColor: ["rgba(255, 99, 132, 1)"],
+ borderWidth: 1,
+ },
+ {
+ label: "최소값",
+ data: [minValues[chartNum*5], minValues[chartNum*5+1], minValues[chartNum*5+2], minValues[chartNum*5+3], minValues[chartNum*5+4]],
+ backgroundColor: ["rgba(255, 159, 64, 0.2)"],
+ borderColor: ["rgba(255, 159, 64, 1)"],
+ borderWidth: 1,
+ },
+ {
+ label: "평균값",
+ data: [avgValues[chartNum*5], avgValues[chartNum*5+1], avgValues[chartNum*5+2], avgValues[chartNum*5+3], avgValues[chartNum*5+4]],
+ backgroundColor: ["rgba(255, 230, 102, 0.2)"],
+ borderColor: ["rgba(255, 230, 102, 1)"],
+ borderWidth: 1,
+ },
+ ],
+ };
+ 
+ const coreConfig = {
+ type: "line",
+ data: coreData,
+ options: {
+ scales: {
+ y: {
+ beginAtZero: true,
+ },
+ },
+ },
+ };
+ 
+ if (!printCoreCharts[chartNum]) {
+ printCoreCharts[chartNum] = new Chart(document.getElementById('core'+(chartNum+1)), coreConfig);
+ }
+ }
 
-      function coreChart2() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const coreData2 = {
-          labels: ["task1", "task2", "task3", "task4", "task5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[5], maxValues[6], maxValues[7], maxValues[8], maxValues[9]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[5], minValues[6], minValues[7], minValues[8], minValues[9]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[5], avgValues[6], avgValues[7], avgValues[8], avgValues[9]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const coreConfig2 = {
-          type: "line",
-          data: coreData2,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printCoreChart2) {
-          printCoreChart2 = new Chart(document.getElementById('core2'), coreConfig2);
-        }
-      }
+ function taskChart(chartNum) {
+ const minValues = jsonData.minValues;
+ const maxValues = jsonData.maxValues;
+ const avgValues = jsonData.avgValues;
+ 
+ const taskData = {
+ labels: ["core1", "core2", "core3", "core4", "core5"],
+ datasets: [
+ {
+ label: "최대값",
+ data: [maxValues[chartNum], maxValues[chartNum+5], maxValues[chartNum+10], maxValues[chartNum+15], maxValues[chartNum+20]],
+ backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+ borderColor: ["rgba(255, 99, 132, 1)"],
+ borderWidth: 1,
+ },
+ {
+ label: "최소값",
+ data: [minValues[chartNum], minValues[chartNum+5], minValues[chartNum+10], minValues[chartNum+15], minValues[chartNum+20]],
+ backgroundColor: ["rgba(255, 159, 64, 0.2)"],
+ borderColor: ["rgba(255, 159, 64, 1)"],
+ borderWidth: 1,
+ },
+ {
+ label: "평균값",
+ data: [avgValues[chartNum], avgValues[chartNum+5], avgValues[chartNum+10], avgValues[chartNum+15], avgValues[chartNum+20]],
+ backgroundColor: ["rgba(255, 230, 102, 0.2)"],
+ borderColor: ["rgba(255, 230, 102, 1)"],
+ borderWidth: 1,
+ },
+ ],
+ };
+ 
+ const taskConfig = {
+ type: "line",
+ data: taskData,
+ options: {
+ scales: {
+ y: {
+ beginAtZero: true,
+ },
+ },
+ },
+ };
+ 
+ if (!printTaskCharts[chartNum]) {
+ printTaskCharts[chartNum] = new Chart(document.getElementById('task'+(chartNum+1)), taskConfig);
+ }
+ }
 
-      function coreChart3() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const coreData3 = {
-          labels: ["task1", "task2", "task3", "task4", "task5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[10], maxValues[11], maxValues[12], maxValues[13], maxValues[14]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[10], minValues[11], minValues[12], minValues[13], minValues[14]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[10], avgValues[11], avgValues[12], avgValues[13], avgValues[14]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const coreConfig3 = {
-          type: "line",
-          data: coreData3,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printCoreChart3) {
-          printCoreChart3 = new Chart(document.getElementById('core3'), coreConfig3);
-        }
-      }
+ function fetchData() {
+ fetch('data.json')
+ .then(response => response.json())
+ .then(data => {
+ jsonData = data;
+ })
+ .catch(error => {
+ console.error('JSON 파일 로드 중 오류 발생:', error);
+ });
+ }
+ </script>
+ 
+ <script>
+function coreDisplay(chartNum) {
+ var a = document.getElementById("core"+(chartNum+1));
+ var b = document.getElementById("task1");
+ var c = document.getElementById("task2");
+ var d = document.getElementById("task3");
+ var e = document.getElementById("task4");
+ var f = document.getElementById("task5");
+ 
+ if (a.style.display !== "block") {
+ coreChart(chartNum);
+ if (b.style.display === "block") {
+ b.style.display = "none";
+ }else if (c.style.display === "block") {
+ c.style.display = "none";
+ }else if (d.style.display === "block") {
+ d.style.display = "none";
+ }else if (e.style.display === "block") {
+ e.style.display = "none";
+ }else if (f.style.display === "block") {
+ f.style.display = "none";
+ }
+ for(var i=0; i<5; i++){
+     if(i !== chartNum){
+         var otherCore = document.getElementById("core"+(i+1));
+         otherCore.style.display = "none";
+     }
+ }
+ a.style.display = "block";
+ } else {
+ a.style.display = "none";
+ }
+}
 
-      function coreChart4() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const coreData4 = {
-          labels: ["task1", "task2", "task3", "task4", "task5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[15], maxValues[16], maxValues[17], maxValues[18], maxValues[19]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[15], minValues[16], minValues[17], minValues[18], minValues[19]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[15], avgValues[16], avgValues[17], avgValues[18], avgValues[18]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const coreConfig4 = {
-          type: "line",
-          data: coreData4,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printCoreChart4) {
-          printCoreChart4 = new Chart(document.getElementById('core4'), coreConfig4);
-        }
-      }
+function taskDisplay(chartNum) {
+ var a = document.getElementById("core1");
+ var b = document.getElementById("core2");
+ var c = document.getElementById("core3");
+ var d = document.getElementById("core4");
+ var e = document.getElementById("core5");
+ var f = document.getElementById("task"+(chartNum+1));
+ 
+ if (f.style.display !== "block") {
+ taskChart(chartNum);
+ if (a.style.display === "block") {
+ a.style.display = "none";
+ }else if (b.style.display === "block") {
+ b.style.display = "none";
+ }else if (c.style.display === "block") {
+ c.style.display = "none";
+ }else if (d.style.display === "block") {
+ d.style.display = "none";
+ }else if (e.style.display === "block") {
+ e.style.display = "none";
+ }
+ for(var i=0; i<5; i++){
+     if(i !== chartNum){
+         var otherTask = document.getElementById("task"+(i+1));
+         otherTask.style.display = "none";
+     }
+ }
+ f.style.display = "block";
+ } else {
+ f.style.display = "none";
+ }
+}
 
-      function coreChart5() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const coreData5 = {
-          labels: ["task1", "task2", "task3", "task4", "task5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[20], maxValues[21], maxValues[22], maxValues[23], maxValues[24]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[20], minValues[21], minValues[22], minValues[23], minValues[24]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[24], avgValues[21], avgValues[22], avgValues[23], avgValues[24]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const coreConfig5 = {
-          type: "line",
-          data: coreData5,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printCoreChart5) {
-          printCoreChart5 = new Chart(document.getElementById('core5'), coreConfig5);
-        }
-      }
+ </script>
+ </head>
 
-      function taskChart1() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const taskData1 = {
-          labels: ["core1", "core2", "core3", "core4", "core5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[0], maxValues[5], maxValues[10], maxValues[15], maxValues[20]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[0], minValues[5], minValues[10], minValues[15], minValues[20]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[0], avgValues[5], avgValues[10], avgValues[15], avgValues[20]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const taskConfig1 = {
-          type: "line",
-          data: taskData1,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printTaskChart1) {
-          printTaskChart1 = new Chart(document.getElementById('task1'), taskConfig1);
-        }
-      }
-
-      function taskChart2() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const taskData2 = {
-          labels: ["core1", "core2", "core3", "core4", "core5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[1], maxValues[6], maxValues[11], maxValues[16], maxValues[21]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[1], minValues[6], minValues[11], minValues[16], minValues[21]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[1], avgValues[6], avgValues[11], avgValues[16], avgValues[21]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const taskConfig2 = {
-          type: "line",
-          data: taskData2,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printTaskChart2) {
-          printTaskChart2 = new Chart(document.getElementById('task2'), taskConfig2);
-        }
-      }
-
-      function taskChart3() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const taskData3 = {
-          labels: ["core1", "core2", "core3", "core4", "core5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[2], maxValues[7], maxValues[12], maxValues[17], maxValues[22]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[2], minValues[7], minValues[12], minValues[17], minValues[22]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[2], avgValues[7], avgValues[12], avgValues[17], avgValues[22]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const taskConfig3 = {
-          type: "line",
-          data: taskData3,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printTaskChart3) {
-          printTaskChart3 = new Chart(document.getElementById('task3'), taskConfig3);
-        }
-      }
-
-      function taskChart4() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const taskData4 = {
-          labels: ["core1", "core2", "core3", "core4", "core5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[3], maxValues[8], maxValues[13], maxValues[18], maxValues[23]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[3], minValues[8], minValues[13], minValues[18], minValues[23]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[3], avgValues[8], avgValues[13], avgValues[18], avgValues[23]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const taskConfig4 = {
-          type: "line",
-          data: taskData4,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printTaskChart4) {
-          printTaskChart4 = new Chart(document.getElementById('task4'), taskConfig4);
-        }
-      }
-
-      function taskChart5() {
-        const minValues = jsonData.minValues;
-        const maxValues = jsonData.maxValues;
-        const avgValues = jsonData.avgValues;
-    
-        const taskData5 = {
-          labels: ["core1", "core2", "core3", "core4", "core5"],
-          datasets: [
-            {
-              label: "최대값",
-              data: [maxValues[4], maxValues[9], maxValues[14], maxValues[19], maxValues[24]],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "최소값",
-              data: [minValues[4], minValues[9], minValues[14], minValues[19], minValues[24]],
-              backgroundColor: ["rgba(255, 159, 64, 0.2)"],
-              borderColor: ["rgba(255, 159, 64, 1)"],
-              borderWidth: 1,
-            },
-            {
-              label: "평균값",
-              data: [avgValues[4], avgValues[9], avgValues[14], avgValues[19], avgValues[24]],
-              backgroundColor: ["rgba(255, 230, 102, 0.2)"],
-              borderColor: ["rgba(255, 230, 102, 1)"],
-              borderWidth: 1,
-            },
-          ],
-        };
-    
-        const taskConfig5 = {
-          type: "line",
-          data: taskData5,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        };
-        if (!printTaskChart5) {
-          printTaskChart5 = new Chart(document.getElementById('task5'), taskConfig5);
-        }
-      }
-
-     
-      
-      function fetchData() {
-        fetch('data.json')
-          .then(response => response.json())
-          .then(data => {
-            jsonData = data;
-          })
-          .catch(error => {
-            console.error('JSON 파일 로드 중 오류 발생:', error);
-          });
-      }
-    </script>
-
-    <ul id="arrayList"></ul>
-    <script type="module" src="app.js"></script>
-   
-    <script>
-      function coreDisplay1() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (a.style.display !== "block") {
-          coreChart1();
-          if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          a.style.display = "block";
-        } else {
-          a.style.display = "none";
-        }
-      }
-      function coreDisplay2() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (b.style.display !== "block") {
-          coreChart2();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          b.style.display = "block";
-        } else {
-          b.style.display = "none";
-        }
-      }
-      function coreDisplay3() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (c.style.display !== "block") {
-          coreChart3();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          c.style.display = "block";
-        } else {
-          c.style.display = "none";
-        }
-      }
-
-      function coreDisplay4() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (d.style.display !== "block") {
-          coreChart4();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          d.style.display = "block";
-        } else {
-          d.style.display = "none";
-        }
-      }
-
-      function coreDisplay5() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (e.style.display !== "block") {
-          coreChart5();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          e.style.display = "block";
-        } else {
-          e.style.display = "none";
-        }
-      }
-
-      function taskDisplay1() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (f.style.display !== "block") {
-          taskChart1();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          f.style.display = "block";
-        } else {
-          f.style.display = "none";
-        }
-      }
-
-      function taskDisplay2() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (g.style.display !== "block") {
-          taskChart2();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          g.style.display = "block";
-        } else {
-          g.style.display = "none";
-        }
-      }
-
-      function taskDisplay3() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (h.style.display !== "block") {
-          taskChart3();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          h.style.display = "block";
-        } else {
-          h.style.display = "none";
-        }
-      }
-
-      function taskDisplay4() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (i.style.display !== "block") {
-          taskChart4();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (j.style.display === "block") {
-            j.style.display = "none";
-          }
-          i.style.display = "block";
-        } else {
-          i.style.display = "none";
-        }
-      }
-
-      function taskDisplay5() {
-        var a = document.getElementById("core1");
-        var b = document.getElementById("core2");
-        var c = document.getElementById("core3");
-        var d = document.getElementById("core4");
-        var e = document.getElementById("core5");
-        var f = document.getElementById("task1");
-        var g = document.getElementById("task2");
-        var h = document.getElementById("task3");
-        var i = document.getElementById("task4");
-        var j = document.getElementById("task5");
-    
-        if (j.style.display !== "block") {
-          taskChart5();
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }else if (b.style.display === "block") {
-            b.style.display = "none";
-          }else if (c.style.display === "block") {
-            c.style.display = "none";
-          }else if (d.style.display === "block") {
-            d.style.display = "none";
-          }else if (e.style.display === "block") {
-            e.style.display = "none";
-          }else if (f.style.display === "block") {
-            f.style.display = "none";
-          }else if (g.style.display === "block") {
-            g.style.display = "none";
-          }else if (h.style.display === "block") {
-            h.style.display = "none";
-          }else if (i.style.display === "block") {
-            i.style.display = "none";
-          }
-          j.style.display = "block";
-        } else {
-          j.style.display = "none";
-        }
-      }
+ <body>
+ <canvas id="core1" style="height: 13px; width: 40px"></canvas>
+ <canvas id="core2" style="height: 13px; width: 40px"></canvas>
+ <canvas id="core3" style="height: 13px; width: 40px"></canvas>
+ <canvas id="core4" style="height: 13px; width: 40px"></canvas>
+ <canvas id="core5" style="height: 13px; width: 40px"></canvas>
+ <canvas id="task1" style="height: 13px; width: 40px"></canvas>
+ <canvas id="task2" style="height: 13px; width: 40px"></canvas>
+ <canvas id="task3" style="height: 13px; width: 40px"></canvas>
+ <canvas id="task4" style="height: 13px; width: 40px"></canvas>
+ <canvas id="task5" style="height: 13px; width: 40px"></canvas>
 
 
-    
-      /*function seeDisplay1() {
-        var a = document.getElementById("core");
-        var b = document.getElementById("task");
-    
-        if (b.style.display !== "block") {
-          if (!myChart2) {
-            myChart2 = new Chart(document.getElementById('task'), config2);
-          }
-          if (a.style.display === "block") {
-            a.style.display = "none";
-          }
-          b.style.display = "block";
-        } else {
-          b.style.display = "none";
-        }
-      }*/
-    </script>
-  </head>
+ <div class="div">
+ <button id="core1" class="core" onclick="coreDisplay(0)">core1</button>
+ <button id="core2" class="core" onclick="coreDisplay(1)">core2</button>
+ <button id="core3" class="core" onclick="coreDisplay(2)">core3</button>
+ <button id="core4" class="core" onclick="coreDisplay(3)">core4</button>
+ <button id="core5" class="core" onclick="coreDisplay(4)">core5</button>
+ </div>
 
-  <body>
-    <canvas id="core1" style="height: 13px; width: 40px"></canvas>
-    <canvas id="core2" style="height: 13px; width: 40px"></canvas>
-    <canvas id="core3" style="height: 13px; width: 40px"></canvas>
-    <canvas id="core4" style="height: 13px; width: 40px"></canvas>
-    <canvas id="core5" style="height: 13px; width: 40px"></canvas>
-    <canvas id="task1" style="height: 13px; width: 40px"></canvas>
-    <canvas id="task2" style="height: 13px; width: 40px"></canvas>
-    <canvas id="task3" style="height: 13px; width: 40px"></canvas>
-    <canvas id="task4" style="height: 13px; width: 40px"></canvas>
-    <canvas id="task5" style="height: 13px; width: 40px"></canvas>
+ <div class="div">
+ <button id="task1" class="task" onclick="taskDisplay(0)">task1</button>
+ <button id="task2" class="task" onclick="taskDisplay(1)">task2</button>
+ <button id="task3" class="task" onclick="taskDisplay(2)">task3</button>
+ <button id="task4" class="task" onclick="taskDisplay(3)">task4</button>
+ <button id="task5" class="task" onclick="taskDisplay(4)">task5</button>
+</div>
 
-
-    <div class="button">
-      <button id="core1" class="core" onclick="coreDisplay1()">core1</button>
-      <button id="core2" class="core" onclick="coreDisplay2()">core2</button>
-      <button id="core3" class="core" onclick="coreDisplay3()">core3</button>
-      <button id="core4" class="core" onclick="coreDisplay4()">core4</button>
-      <button id="core5" class="core" onclick="coreDisplay5()">core5</button>
-      <button id="taks1" class="task" onclick="taskDisplay1()">task1</button>
-      <button id="taks2" class="task" onclick="taskDisplay2()">task2</button>
-      <button id="taks3" class="task" onclick="taskDisplay3()">task3</button>
-      <button id="taks4" class="task" onclick="taskDisplay4()">task4</button>
-      <button id="taks5" class="task" onclick="taskDisplay5()">task5</button>
-    </div>
-
-    <script>
-      fetchData();
-    </script>
-  </body>
+ <script>
+ fetchData();
+ </script>
+ </body>
 </html>
