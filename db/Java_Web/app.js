@@ -1,6 +1,6 @@
-//import {MongoClient} from "mongodb";
+require('dotenv').config();
 const {MongoClient} = require("mongodb")
-const URL = "mongodb+srv://minwoo9594:8Yi4X3tbs24dczAu@javacluster.dv5qbrn.mongodb.net/?retryWrites=true&w=majority"
+const URL = process.env.URL;
 const fs = require("fs");
 const path = require('path');
 

@@ -21,4 +21,20 @@
     font-size: 35px;
    
 }
+@font-face {
+    font-family: 'D2Coding';
+    src: url('D2Coding.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rbutton {
+    font-family: 'D2Coding', monospace;
+    border-radius: 35px;
+    width: 150px;
+    height: 70px;
+    margin: 45px;
+    font-size: 35px;
+    background-color: #ffffff;
+  }
 

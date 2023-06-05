@@ -48,6 +48,7 @@ app.get('/first',async function(req,res){
     result.stdout.on('data', function(data){
     no_RUN_py = data.toString();
     no_RUN_py = no_RUN_py.trim();
+    //console.log(no_RUN_py);
 
     
       
@@ -70,7 +71,7 @@ app.get('/first',async function(req,res){
 
         
     }
-    if(no_RUN_py !== 'True'){
+    if(no_RUN_py === 'False'){
         console.log('텍스트 파일 오류');
         res.sendFile(__dirname + '/error.html');
     }
