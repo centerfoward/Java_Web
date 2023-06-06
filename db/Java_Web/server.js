@@ -1,13 +1,16 @@
-const { Console } = require('console');
+const { Console, time } = require('console');
 const express = require('express');
 const multer = require('multer');
 const app = express();
 app.use(express.static(__dirname));
 app.use('/app.js', express.static(__dirname + '/app.js'));
 const {exec} = require('child_process');
+const fs = require('fs');
 
 
-
+function writeToLog(message) {
+    fs.appendFileSync('server.log', message + '\n');
+}
 
 const path = require('path');
 
@@ -23,16 +26,12 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 
+
+
 app.listen(8000, function(req,res){
+    writeToLog('8000번 포트로 들어옴');
     console.log('8000번 포트로 들어옴');
 });
-
-
-app.get('/home',function(req,res){
-    res.send('home입니다.');
-});
-
-
 
 
 app.get('/first',async function(req,res){
@@ -58,13 +57,16 @@ app.get('/first',async function(req,res){
         exec("node app.js", (error, stdout, stderr) => {
             stdout = stdout.trim();
             if (error) {
+                writeToLog(`실행 중 오류 발생: ${error}`);
               console.error(`실행 중 오류 발생: ${error}`);
               return;
             }
             if(stdout === "True"){
+                writeToLog("값 저장완료")
                 console.log("값 저장완료");
                 res.sendFile(__dirname + '/chart1.html');
             }
+            writeToLog(`stdout: ${stdout}`);
             console.log(`stdout: ${stdout}`);
          
           });
@@ -72,12 +74,14 @@ app.get('/first',async function(req,res){
         
     }
     if(no_RUN_py === 'False'){
+        writeToLog('텍스트 파일 오류');
         console.log('텍스트 파일 오류');
         res.sendFile(__dirname + '/error.html');
     }
     });
 
     result.stderr.on('data', function(data){
+        writeToLog('파이썬 실행 오류');
         console.log('파이썬 실행 오류');
         res.sendFile(__dirname + '/error.html');
     });
@@ -87,6 +91,20 @@ app.get('/first',async function(req,res){
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+
+app.use((req, res, next) => {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var today = new Date();
+    var hours = ('0' + today.getHours()).slice(-2);
+    var minutes = ('0' + today.getMinutes()).slice(-2);
+    var seconds = ('0' + today.getSeconds()).slice(-2);
+    var timeString = hours + ':' + minutes + ':' + seconds;
+    writeToLog(`접속한 시간 : ${timeString}`);
+    writeToLog(`접속한 클라이언트 IP 주소: ${ip}`);
+    console.log(`접속한 클라이언트 IP 주소: ${ip}`);
+    next();
 });
 
 
@@ -116,6 +134,7 @@ app.post('/', upload.array('profile', maxFileCount), function(req, res){
         console.log(req.files[0]);
         console.log(req.files.originalname);
         var complete = "업로드 완료";
+
         console.log(complete);
         
     
